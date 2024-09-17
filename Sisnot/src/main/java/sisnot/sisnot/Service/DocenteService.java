@@ -26,9 +26,9 @@ public class DocenteService {
     }
 
     @Transactional(readOnly = true)
-    public DocenteResponseDTO getDocenteById(Long docentePk) {
-        Docente docente = docenteRepository.findById(docentePk)
-                .orElseThrow(() -> new RuntimeException("Docente no encontrado" + docentePk));
+    public DocenteResponseDTO getDocenteById(Long id) {
+        Docente docente = docenteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Docente no encontrado" + id));
         return docenteMapper.convertToDTO(docente);
     }
 
@@ -40,9 +40,9 @@ public class DocenteService {
     }
 
     @Transactional
-    public DocenteResponseDTO updateDocente(Long docentePk, DocenteRequestDTO docenteRequestDTO) {
-        Docente docente = docenteRepository.findById(docentePk)
-                .orElseThrow(() -> new RuntimeException("Docente no encontrado" + docentePk));
+    public DocenteResponseDTO updateDocente(Long id, DocenteRequestDTO docenteRequestDTO) {
+        Docente docente = docenteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Docente no encontrado" + id));
 
         docente.setApellidoPaterno(docenteRequestDTO.getApellidoPaterno());
         docente.setApellidoMaterno(docenteRequestDTO.getApellidoMaterno());
@@ -59,7 +59,7 @@ public class DocenteService {
     }
 
     @Transactional
-    public void deleteDocente(Long docentePk) {
-        docenteRepository.deleteById(docentePk);
+    public void deleteDocente(Long id) {
+        docenteRepository.deleteById(id);
     }
 }

@@ -27,9 +27,9 @@ public class CursoService {
     }
 
     @Transactional(readOnly = true)
-    public CursoResponseDTO getCursoById(Long cursoPk) {
-        Curso curso = cursoRepository.findById(cursoPk)
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado" + cursoPk));
+    public CursoResponseDTO getCursoById(Long id) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado" + id));
         return cursoMapper.convertToDTO(curso);
     }
 
@@ -41,9 +41,9 @@ public class CursoService {
     }
 
     @Transactional
-    public CursoResponseDTO updateCurso(Long cursoPk, CursoRequestDTO cursoRequestDTO) {
-        Curso curso = cursoRepository.findById(cursoPk)
-                .orElseThrow(() -> new RuntimeException("Curso no encontrado" + cursoPk));
+    public CursoResponseDTO updateCurso(Long id, CursoRequestDTO cursoRequestDTO) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Curso no encontrado" + id));
 
         curso.setNomCurso(cursoRequestDTO.getNomCurso());
         curso.setCiclo(cursoRequestDTO.getCiclo());
@@ -54,7 +54,7 @@ public class CursoService {
     }
 
     @Transactional
-    public void deleteCurso(Long cursoPk) {
-        cursoRepository.deleteById(cursoPk);
+    public void deleteCurso(Long id) {
+        cursoRepository.deleteById(id);
     }
 }

@@ -28,9 +28,9 @@ public class NotaService {
     }
 
     @Transactional(readOnly = true)
-    public NotaResponseDTO getNotaById(Long notaPk) {
-        Nota nota = notaRepository.findById(notaPk)
-                .orElseThrow(() -> new RuntimeException("Nota no encontrada" + notaPk));
+    public NotaResponseDTO getNotaById(Long id) {
+        Nota nota = notaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nota no encontrada" + id));
         return notaMapper.convertToDTO(nota);
     }
 
@@ -42,9 +42,9 @@ public class NotaService {
     }
 
     @Transactional
-    public NotaResponseDTO updateNota(Long notaPk, NotaRequestDTO notaRequestDTO) {
-        Nota nota = notaRepository.findById(notaPk)
-                .orElseThrow(() -> new RuntimeException("Nota no encontrada" + notaPk));
+    public NotaResponseDTO updateNota(Long id, NotaRequestDTO notaRequestDTO) {
+        Nota nota = notaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nota no encontrada" + id));
         // Update nota fields based on notaRequestDTO
 
         nota.setComponente1Nota(notaRequestDTO.getComponente1Nota());
@@ -60,8 +60,8 @@ public class NotaService {
     }
 
     @Transactional
-    public void deleteNota(Long notaPk) {
-        notaRepository.deleteById(notaPk);
+    public void deleteNota(Long id) {
+        notaRepository.deleteById(id);
     }
 
 }
