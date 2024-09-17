@@ -24,7 +24,10 @@ public class AlumnoResponseDTO {
     private String estado;
 
     private List<NotaResponseDTO> notas;
-    private List<CursoResponseDTO> cursos;
-  //  private List<DocenteResponseDTO> docentes;
+
+    //private List<CursoResponseDTO> cursos;
+
+    private List<String> docenteNombres;
+
 
 }
