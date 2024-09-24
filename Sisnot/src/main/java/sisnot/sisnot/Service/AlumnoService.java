@@ -10,6 +10,7 @@ import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
 import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Repository.AlumnoRepository;
 import sisnot.sisnot.Repository.DocenteRepository;
+import sisnot.sisnot.Repository.NotaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,7 @@ public class AlumnoService {
     @Autowired
     private AlumnoMapper alumnoMapper;
     private AlumnoRepository alumnoRepository;
+
 
     @Transactional(readOnly = true)
     public List<AlumnoResponseDTO> getAllAlumnos() {

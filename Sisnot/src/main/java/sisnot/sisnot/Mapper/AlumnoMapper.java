@@ -8,6 +8,7 @@ import sisnot.sisnot.Model.Dto.AlumnoRequestDTO;
 import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
 import sisnot.sisnot.Model.Dto.NotaResponseDTO;
 import sisnot.sisnot.Model.entity.Alumno;
+import sisnot.sisnot.Model.entity.Curso;
 import sisnot.sisnot.Model.entity.Docente;
 import sisnot.sisnot.Model.entity.Nota;
 
@@ -15,23 +16,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@AllArgsConstructor
 @Component
 public class AlumnoMapper {
     private final ModelMapper modelMapper;
 
-    public AlumnoMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
-        this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-    }
-
-    public AlumnoResponseDTO toDTO(Alumno alumno) {
-        AlumnoResponseDTO alumnoResponseDTO = modelMapper.map(alumno, AlumnoResponseDTO.class);
-        alumnoResponseDTO.set
-        return alumnoResponseDTO;
-    }
-
-   /* public AlumnoResponseDTO convertToDTO(Alumno alumno) {
+    public AlumnoResponseDTO convertToDTO(Alumno alumno) {
         AlumnoResponseDTO alumnoResponseDTO = modelMapper.map(alumno, AlumnoResponseDTO.class);
         List<Docente> docentes = alumno.getDocentes();
         List<String> docenteNombres = docentes.stream()
@@ -49,8 +39,15 @@ public class AlumnoMapper {
                         " CF: " + nota.getNotaFinal())
                 .collect(Collectors.toList());
         alumnoResponseDTO.setNotasFinales(notasFinales);
+
+        List<Curso> cursos = alumno.getCursos();
+        List<String>listaCursos=cursos.stream()
+                .map(Curso::getNomCurso)
+                .collect(Collectors.toList());
+        alumnoResponseDTO.setListaCursos(listaCursos);
+
         return alumnoResponseDTO;
-    }*/
+    }
 
     public NotaResponseDTO convertNotaToDTO(Nota nota) {
         return modelMapper.map(nota, NotaResponseDTO.class);
