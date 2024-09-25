@@ -17,12 +17,12 @@ public class DocenteResponseDTO {
     private String dni;
     private String direccion;
     private String email;
-    private Integer celular;
+    private String celular;
     private String estado;
 
 
-    private List<AlumnoResponseDTO> alumnos;
-
+    private List<String> listaAlumnos;
+    private List<String> listaCursos;
 
 
 }

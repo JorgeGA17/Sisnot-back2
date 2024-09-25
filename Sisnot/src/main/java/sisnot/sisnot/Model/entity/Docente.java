@@ -38,7 +38,7 @@ public class Docente {
     private String email;
 
     @Column(name = "celular")
-    private Integer celular;
+    private String celular;
 
     @Size(max = 30)
     @Column(name = "estado", length = 30)

@@ -23,28 +23,41 @@ public class AlumnoMapper {
 
     public AlumnoResponseDTO convertToDTO(Alumno alumno) {
         AlumnoResponseDTO alumnoResponseDTO = modelMapper.map(alumno, AlumnoResponseDTO.class);
-        List<Docente> docentes = alumno.getDocentes();
-        List<String> docenteNombres = docentes.stream()
-                .map(docente -> docente.getNombre() + " " + docente.getApellidoPaterno() + " " + docente.getApellidoMaterno())
-                .collect(Collectors.toList());
-        alumnoResponseDTO.setDocenteNombres(docenteNombres);
 
-        List<Nota> notas = alumno.getNotas();
-        List<String> notasFinales = notas.stream()
-                .map(nota -> " C1: " + nota.getComponente1Nota() +
-                        " C2: " + nota.getComponente2Nota() +
-                        " Cp: " + nota.getNotaParcial() +
-                        " C3: " + nota.getComponente3Nota() +
-                        " C4: " + nota.getComponente4Nota() +
-                        " CF: " + nota.getNotaFinal())
-                .collect(Collectors.toList());
-        alumnoResponseDTO.setNotasFinales(notasFinales);
+        if (alumno.getDocentes() != null) {
+            List<Docente> docentes = alumno.getDocentes();
+            List<String> docenteNombres = docentes.stream()
+                    .map(docente -> docente.getNombre() + " " + docente.getApellidoPaterno() + " " + docente.getApellidoMaterno())
+                    .collect(Collectors.toList());
+            alumnoResponseDTO.setDocenteNombres(docenteNombres);
+        } else {
+            alumnoResponseDTO.setDocenteNombres(Collections.emptyList());
+        }
 
-        List<Curso> cursos = alumno.getCursos();
-        List<String>listaCursos=cursos.stream()
-                .map(Curso::getNomCurso)
-                .collect(Collectors.toList());
-        alumnoResponseDTO.setListaCursos(listaCursos);
+        if (alumno.getNotas() != null) {
+            List<Nota> notas = alumno.getNotas();
+            List<String> notasFinales = notas.stream()
+                    .map(nota -> " C1: " + nota.getComponente1Nota() +
+                            " C2: " + nota.getComponente2Nota() +
+                            " Cp: " + nota.getNotaParcial() +
+                            " C3: " + nota.getComponente3Nota() +
+                            " C4: " + nota.getComponente4Nota() +
+                            " CF: " + nota.getNotaFinal())
+                    .collect(Collectors.toList());
+            alumnoResponseDTO.setNotasFinales(notasFinales);
+        } else {
+            alumnoResponseDTO.setNotasFinales(Collections.emptyList());
+        }
+
+        if (alumno.getCursos() != null) {
+            List<Curso> cursos = alumno.getCursos();
+            List<String> listaCursos = cursos.stream()
+                    .map(Curso::getNomCurso)
+                    .collect(Collectors.toList());
+            alumnoResponseDTO.setListaCursos(listaCursos);
+        } else {
+            alumnoResponseDTO.setListaCursos(Collections.emptyList());
+        }
 
         return alumnoResponseDTO;
     }

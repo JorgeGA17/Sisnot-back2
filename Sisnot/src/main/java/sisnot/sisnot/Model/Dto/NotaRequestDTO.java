@@ -45,6 +45,5 @@ public class NotaRequestDTO {
     @DecimalMax(value = "20.0", message = "Nota final debe ser menor o igual a 20.0")
     private Double notaFinal;
 
-    @NotNull(message = "Fecha de registro es requerida")
     private LocalDateTime fechaRegistro;
 }

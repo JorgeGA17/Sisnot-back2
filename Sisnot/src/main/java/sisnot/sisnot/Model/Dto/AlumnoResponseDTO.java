@@ -19,7 +19,7 @@ public class AlumnoResponseDTO {
     private String dni;
     private String direccion;
     private String email;
-    private Integer celular;
+    private String celular;
     private LocalDateTime fechaIngreso;
     private String estado;
 
@@ -28,3 +28,4 @@ public class AlumnoResponseDTO {
     private List<String> listaCursos;
 
 }
+

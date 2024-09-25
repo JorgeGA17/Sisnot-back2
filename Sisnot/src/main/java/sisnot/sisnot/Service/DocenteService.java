@@ -60,6 +60,7 @@ public class DocenteService {
 
     @Transactional
     public void deleteDocente(Long id) {
+
         docenteRepository.deleteById(id);
     }
 }

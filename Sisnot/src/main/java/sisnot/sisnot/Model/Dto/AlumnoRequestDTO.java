@@ -35,10 +35,7 @@ public class AlumnoRequestDTO {
    @NotNull(message = "Celular es requerido")
    @Min(value = 900000000, message = "Celular debe tener al menos 9 dígitos")
    @Max(value = 999999999, message = "Celular debe tener como máximo 9 dígitos")
-   private Integer celular;
-
-   @NotNull(message = "Fecha de ingreso es requerida")
-   private LocalDateTime fechaIngreso;
+   private String celular;
 
    @NotBlank(message = "Estado es requerido")
    private String estado;

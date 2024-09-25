@@ -40,6 +40,7 @@ public class AlumnoService {
     @Transactional
     public AlumnoResponseDTO createAlumno(AlumnoRequestDTO alumnoRequestDTO) {
         Alumno alumno = alumnoMapper.convertToEntity(alumnoRequestDTO);
+        alumno.setFechaIngreso(LocalDateTime.now());
         alumnoRepository.save(alumno);
         return alumnoMapper.convertToDTO(alumno);
     }

@@ -40,7 +40,7 @@ public class Alumno {
     private String email;
 
     @Column(name = "celular")
-    private Integer celular;
+    private String celular;
 
     @Column(name = "fecha_ingreso")
     private LocalDateTime fechaIngreso;
@@ -52,7 +52,10 @@ public class Alumno {
     @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.ALL)
     private List<Nota> notas;
 
-    @ManyToMany(mappedBy = "alumnos")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "docente_alumnos",
+            joinColumns = @JoinColumn(name = "alumno_fk ", foreignKey = @ForeignKey(name = "fk_docalum_alumnoid ")),
+            inverseJoinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_docalum_docenteid")))
     private List<Docente> docentes;
 
     @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.ALL)
