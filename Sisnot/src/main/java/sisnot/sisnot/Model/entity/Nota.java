@@ -44,7 +44,4 @@ public class Nota {
     @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_nota_cursoid"))
     private Curso cursofk;
 
-
-
-
 }

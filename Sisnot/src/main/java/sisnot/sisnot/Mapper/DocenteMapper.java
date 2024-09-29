@@ -9,6 +9,7 @@ import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Model.entity.Curso;
 import sisnot.sisnot.Model.entity.Docente;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,21 +19,29 @@ public class DocenteMapper {
     private final ModelMapper modelMapper;
 
     public DocenteResponseDTO convertToDTO(Docente docente) {
-       DocenteResponseDTO docenteResponseDTO = modelMapper.map(docente, DocenteResponseDTO.class);
-       List<Alumno> alumnos = docente.getAlumnos();
-       List<String> listaAlumnos = alumnos.stream()
-               .map(alumno -> alumno.getNombre()+" "+alumno.getApellidoPaterno()+" "+alumno.getApellidoMaterno())
-               .collect(Collectors.toList());
-       docenteResponseDTO.setListaAlumnos(listaAlumnos);
+        DocenteResponseDTO docenteResponseDTO = modelMapper.map(docente, DocenteResponseDTO.class);
 
-        List<Curso> cursos = docente.getCursos();
-        List<String>listaCursos=cursos.stream()
-                .map(Curso::getNomCurso)
-                .collect(Collectors.toList());
-        docenteResponseDTO.setListaCursos(listaCursos);
+        if (docente.getAlumnos() != null) {
+            List<Alumno> alumnos = docente.getAlumnos();
+            List<String> listaAlumnos = alumnos.stream()
+                    .map(alumno -> alumno.getNombre()+" "+alumno.getApellidoPaterno()+" "+alumno.getApellidoMaterno())
+                    .collect(Collectors.toList());
+            docenteResponseDTO.setListaAlumnos(listaAlumnos);
+        } else {
+            docenteResponseDTO.setListaAlumnos(Collections.emptyList());
+        }
 
-       return docenteResponseDTO;
+        if (docente.getCursos() != null) {
+            List<Curso> cursos = docente.getCursos();
+            List<String> listaCursos = cursos.stream()
+                    .map(Curso::getNomCurso)
+                    .collect(Collectors.toList());
+            docenteResponseDTO.setListaCursos(listaCursos);
+        } else {
+            docenteResponseDTO.setListaCursos(Collections.emptyList());
+        }
 
+        return docenteResponseDTO;
     }
 
     public Docente convertToEntity(DocenteRequestDTO docenteRequestDTO) {

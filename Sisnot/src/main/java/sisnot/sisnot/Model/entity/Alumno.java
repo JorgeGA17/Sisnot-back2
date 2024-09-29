@@ -60,6 +60,4 @@ public class Alumno {
 
     @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.REMOVE)
     private List<Curso> cursos;
-
-
 }

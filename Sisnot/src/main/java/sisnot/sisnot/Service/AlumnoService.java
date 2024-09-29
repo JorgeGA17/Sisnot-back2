@@ -9,8 +9,6 @@ import sisnot.sisnot.Model.Dto.AlumnoRequestDTO;
 import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
 import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Repository.AlumnoRepository;
-import sisnot.sisnot.Repository.DocenteRepository;
-import sisnot.sisnot.Repository.NotaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
