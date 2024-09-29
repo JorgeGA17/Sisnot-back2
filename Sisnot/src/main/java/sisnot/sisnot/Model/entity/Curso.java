@@ -31,16 +31,16 @@ public class Curso {
     @Column(name = "estado", length = 30)
     private String estado;
 
-    @OneToMany(mappedBy = "cursofk",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cursofk",cascade = CascadeType.REMOVE)
     private List<Nota> notas;
 
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JoinTable(name = "curso_docentes",
             joinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_cursodoc_cursoid")),
             inverseJoinColumns = @JoinColumn(name = "docente_fk",  foreignKey = @ForeignKey(name = "fk_cursodoc_docenteid")))
     private List<Docente> docentes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_fk",  foreignKey = @ForeignKey(name = "fk_curso_alumnoid"))
     private Alumno alumnofk;
 

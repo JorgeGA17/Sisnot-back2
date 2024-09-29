@@ -44,7 +44,7 @@ public class Docente {
     @Column(name = "estado", length = 30)
     private String estado;
 
-    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JoinTable(name = "docente_alumnos",
             joinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_docalum_docenteid")),
             inverseJoinColumns = @JoinColumn(name = "alumno_fk", foreignKey = @ForeignKey(name = "fk_docalum_alumnoid")))

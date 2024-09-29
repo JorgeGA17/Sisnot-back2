@@ -49,16 +49,16 @@ public class Alumno {
     @Column(name = "estado", length = 20)
     private String estado;
 
-    @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.REMOVE)
     private List<Nota> notas;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(name = "docente_alumnos",
             joinColumns = @JoinColumn(name = "alumno_fk ", foreignKey = @ForeignKey(name = "fk_docalum_alumnoid ")),
             inverseJoinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_docalum_docenteid")))
     private List<Docente> docentes;
 
-    @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.REMOVE)
     private List<Curso> cursos;
 
 

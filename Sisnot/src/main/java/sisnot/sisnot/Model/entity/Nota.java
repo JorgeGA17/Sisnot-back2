@@ -2,10 +2,9 @@ package sisnot.sisnot.Model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Formula;
 
 import java.time.LocalDateTime;
-import java.time.OffsetTime;
+
 
 
 @Data
@@ -37,11 +36,11 @@ public class Nota {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_fk",  foreignKey = @ForeignKey(name = "fk_nota_alumnoid"))
     private Alumno alumnofk;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_nota_cursoid"))
     private Curso cursofk;
 
