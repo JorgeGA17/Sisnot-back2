@@ -37,6 +37,7 @@ public class NotaService {
     @Transactional
     public NotaResponseDTO createNota(NotaRequestDTO notaRequestDTO) {
         Nota nota = notaMapper.convertToEntity(notaRequestDTO);
+        nota.setFechaRegistro(LocalDateTime.now());
         notaRepository.save(nota);
         return notaMapper.convertToDTO(nota);
     }
