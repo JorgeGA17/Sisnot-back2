@@ -18,7 +18,5 @@ public class CursoResponseDTO {
     private String estado;
 
     private List<String> listaDocentes;
-    private List<String> listaAlumnos;
-    private List<String> listaNotas;
 
 }

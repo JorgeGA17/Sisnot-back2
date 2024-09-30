@@ -5,9 +5,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 import sisnot.sisnot.Model.Dto.CursoRequestDTO;
 import sisnot.sisnot.Model.Dto.CursoResponseDTO;
+import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Model.entity.Curso;
 import sisnot.sisnot.Model.entity.Docente;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +36,7 @@ public class CursoMapper {
             cursoResponseDTO.setListaDocentes(Collections.emptyList());
         }
 
-        return cursoResponseDTO;
+             return cursoResponseDTO;
     }
 
     public List<CursoResponseDTO> convertToDTO(List<Curso> cursos) {
