@@ -34,7 +34,7 @@ public class Curso {
     @OneToMany(mappedBy = "cursofk",cascade = CascadeType.REMOVE)
     private List<Nota> notas;
 
-    @ManyToMany(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     @JoinTable(name = "curso_docentes",
             joinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_cursodoc_cursoid")),
             inverseJoinColumns = @JoinColumn(name = "docente_fk",  foreignKey = @ForeignKey(name = "fk_cursodoc_docenteid")))
