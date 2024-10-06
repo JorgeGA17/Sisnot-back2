@@ -16,7 +16,7 @@ public class Curso {
     private Long id;
 
     @Size(max = 100)
-    @Column(name = "nom_curso", length = 100)
+    @Column(name = "nom_curso", length = 100, unique = true)
     private String nomCurso;
 
     @Size(max = 30)

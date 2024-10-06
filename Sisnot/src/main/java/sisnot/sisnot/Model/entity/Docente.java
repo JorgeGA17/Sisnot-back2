@@ -26,7 +26,7 @@ public class Docente {
     @Column(name = "nombre", length = 100)
     private String nombre;
 
-    @Column(name = "dni")
+    @Column(name = "dni", unique = true)
     private String dni;
 
     @Size(max = 100)
@@ -34,10 +34,10 @@ public class Docente {
     private String direccion;
 
     @Size(max = 100)
-    @Column(name = "email", length = 100)
+    @Column(name = "email", length = 100, unique = true)
     private String email;
 
-    @Column(name = "celular")
+    @Column(name = "celular", unique = true)
     private String celular;
 
     @Size(max = 30)
