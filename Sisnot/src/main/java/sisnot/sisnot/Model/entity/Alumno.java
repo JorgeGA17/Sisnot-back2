@@ -39,8 +39,7 @@ public class Alumno {
     @Column(name = "email", length = 100, unique = true)
     private String email;
 
-    @Column(name = "celular", unique = trueus
-    )
+    @Column(name = "celular", unique = true)
     private String celular;
 
     @Column(name = "fecha_ingreso")
