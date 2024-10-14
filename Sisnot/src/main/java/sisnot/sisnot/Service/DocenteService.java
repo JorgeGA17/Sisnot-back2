@@ -15,6 +15,7 @@ import sisnot.sisnot.Repository.AlumnoRepository;
 import sisnot.sisnot.Repository.CursoRepository;
 import sisnot.sisnot.Repository.DocenteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,10 +48,6 @@ public class DocenteService {
     @Transactional
     public DocenteResponseDTO createDocente(DocenteRequestDTO docenteDTO) {
         Docente docente = docenteMapper.convertToEntity(docenteDTO);
-        if (docenteDTO.getCursoId() != null) {
-            Curso curso = cursoRepository.findById(docenteDTO.getCursoId()).orElseThrow();
-            docente.getCursos().add(curso);
-        }
         docenteRepository.save(docente);
         return docenteMapper.convertToDTO(docente);
     }
@@ -69,12 +66,6 @@ public class DocenteService {
         docente.setEmail(docenteDTO.getEmail());
         docente.setCelular(docenteDTO.getCelular());
         docente.setEstado(docenteDTO.getEstado());
-
-        // Asignar curso al docente
-        if (docenteDTO.getCursoId() != null) {
-            Curso curso = cursoRepository.findById(docenteDTO.getCursoId()).orElseThrow();
-            docente.getCursos().add(curso);
-        }
 
         docenteRepository.save(docente);
         return docenteMapper.convertToDTO(docente);

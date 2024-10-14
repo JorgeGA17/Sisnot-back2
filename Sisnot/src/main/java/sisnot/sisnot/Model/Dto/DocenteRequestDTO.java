@@ -40,5 +40,6 @@ public class DocenteRequestDTO {
     private String estado;
 
     @NotNull(message = "Debe ingresar curso que dicta docente")
-    private Long CursoId;
+    private Integer CursoId;
+
 }
