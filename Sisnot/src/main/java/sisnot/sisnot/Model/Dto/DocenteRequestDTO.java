@@ -38,4 +38,7 @@ public class DocenteRequestDTO {
 
     @NotBlank(message = "Estado es requerido")
     private String estado;
+
+    @NotNull(message = "Debe ingresar curso que dicta docente")
+    private Long CursoId;
 }

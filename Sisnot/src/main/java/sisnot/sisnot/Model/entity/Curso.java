@@ -31,7 +31,7 @@ public class Curso {
     @Column(name = "estado", length = 30)
     private String estado;
 
-    @OneToMany(mappedBy = "cursofk",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "cursofk",cascade = CascadeType.DETACH)
     private List<Nota> notas;
 
     @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
@@ -40,7 +40,7 @@ public class Curso {
             inverseJoinColumns = @JoinColumn(name = "docente_fk",  foreignKey = @ForeignKey(name = "fk_cursodoc_docenteid")))
     private List<Docente> docentes;
 
-    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_fk",  foreignKey = @ForeignKey(name = "fk_curso_alumnoid"))
     private Alumno alumnofk;
 

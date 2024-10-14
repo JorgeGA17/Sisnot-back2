@@ -36,11 +36,11 @@ public class Nota {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
 
-    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     @JoinColumn(name = "alumno_fk",  foreignKey = @ForeignKey(name = "fk_nota_alumnoid"))
     private Alumno alumnofk;
 
-    @ManyToOne(cascade = CascadeType.REMOVE,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_nota_cursoid"))
     private Curso cursofk;
 

@@ -45,30 +45,41 @@ public class DocenteService {
     }
 
     @Transactional
-    public DocenteResponseDTO createDocente(DocenteRequestDTO docenteRequestDTO) {
-        Docente docente = docenteMapper.convertToEntity(docenteRequestDTO);
+    public DocenteResponseDTO createDocente(DocenteRequestDTO docenteDTO) {
+        Docente docente = docenteMapper.convertToEntity(docenteDTO);
+        if (docenteDTO.getCursoId() != null) {
+            Curso curso = cursoRepository.findById(docenteDTO.getCursoId()).orElseThrow();
+            docente.getCursos().add(curso);
+        }
         docenteRepository.save(docente);
         return docenteMapper.convertToDTO(docente);
     }
 
     @Transactional
-    public DocenteResponseDTO updateDocente(Long id, DocenteRequestDTO docenteRequestDTO) {
+    public DocenteResponseDTO updateDocente(Long id, DocenteRequestDTO docenteDTO) {
         Docente docente = docenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Docente no encontrado" + id));
 
-        docente.setApellidoPaterno(docenteRequestDTO.getApellidoPaterno());
-        docente.setApellidoMaterno(docenteRequestDTO.getApellidoMaterno());
-        docente.setNombre(docenteRequestDTO.getNombre());
-        docente.setDni(docenteRequestDTO.getDni());
-        docente.setDireccion(docenteRequestDTO.getDireccion());
-        docente.setEmail(docenteRequestDTO.getEmail());
-        docente.setCelular(docenteRequestDTO.getCelular());
-        docente.setEstado(docenteRequestDTO.getEstado());
+        // Actualizar campos del docente
+        docente.setApellidoPaterno(docenteDTO.getApellidoPaterno());
+        docente.setApellidoMaterno(docenteDTO.getApellidoMaterno());
+        docente.setNombre(docenteDTO.getNombre());
+        docente.setDni(docenteDTO.getDni());
+        docente.setDireccion(docenteDTO.getDireccion());
+        docente.setEmail(docenteDTO.getEmail());
+        docente.setCelular(docenteDTO.getCelular());
+        docente.setEstado(docenteDTO.getEstado());
 
+        // Asignar curso al docente
+        if (docenteDTO.getCursoId() != null) {
+            Curso curso = cursoRepository.findById(docenteDTO.getCursoId()).orElseThrow();
+            docente.getCursos().add(curso);
+        }
 
         docenteRepository.save(docente);
         return docenteMapper.convertToDTO(docente);
     }
+
 
     @Transactional
     public void deleteDocente(Long id) {
@@ -80,14 +91,6 @@ public class DocenteService {
             alumnoRepository.save(alumno); // Guarda el alumno después de eliminar la relación
         }
 
-        // Eliminar relaciones con cursos
-        for (Curso curso : docente.getCursos()) {
-            curso.getDocentes().remove(docente);
-            cursoRepository.save(curso); // Guarda el curso después de eliminar la relación
-        }
-
-
         docenteRepository.delete(docente);
-
     }
 }

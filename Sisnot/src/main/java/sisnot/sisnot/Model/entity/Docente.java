@@ -53,5 +53,4 @@ public class Docente {
     @ManyToMany(mappedBy = "docentes")
     private List<Curso> cursos;
 
-
 }
