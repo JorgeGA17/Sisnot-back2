@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -50,17 +51,12 @@ public class Alumno {
     private String estado;
 
     @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.DETACH)
-    private List<Nota> notas;
+    private List<Nota> notas= new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(name = "docente_alumnos",
-            joinColumns = @JoinColumn(name = "alumno_fk ", foreignKey = @ForeignKey(name = "fk_docalum_alumnoid ")),
-            inverseJoinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_docalum_docenteid")))
-    private List<Docente> docentes;
-
-    @OneToMany(mappedBy = "alumnofk",cascade = CascadeType.DETACH)
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinTable(name = "alumno_cursos",
+            joinColumns = @JoinColumn(name = "alumno_fk", foreignKey = @ForeignKey(name = "fk_alumcur_alumnoid")),
+            inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_alumcur_cursoid")))
     private List<Curso> cursos;
-
-
 
 }

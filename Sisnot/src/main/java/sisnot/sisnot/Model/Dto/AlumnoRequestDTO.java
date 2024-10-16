@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,5 +40,8 @@ public class AlumnoRequestDTO {
 
    @NotBlank(message = "Estado es requerido")
    private String estado;
+
+   @NotEmpty(message = "La lista de cursos es requerida")
+   private List<Long> cursoIds;
 
 }

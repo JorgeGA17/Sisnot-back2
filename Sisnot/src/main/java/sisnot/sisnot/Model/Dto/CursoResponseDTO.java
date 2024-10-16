@@ -16,7 +16,6 @@ public class CursoResponseDTO {
     private String ciclo;
     private String credito;
     private String estado;
-
     private List<String> listaDocentes;
 
 }

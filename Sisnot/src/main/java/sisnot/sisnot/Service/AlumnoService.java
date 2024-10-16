@@ -8,7 +8,9 @@ import sisnot.sisnot.Mapper.AlumnoMapper;
 import sisnot.sisnot.Model.Dto.AlumnoRequestDTO;
 import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
 import sisnot.sisnot.Model.entity.Alumno;
+import sisnot.sisnot.Model.entity.Curso;
 import sisnot.sisnot.Repository.AlumnoRepository;
+import sisnot.sisnot.Repository.CursoRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +22,8 @@ public class AlumnoService {
     @Autowired
     private AlumnoMapper alumnoMapper;
     private AlumnoRepository alumnoRepository;
+    @Autowired
+    private CursoRepository cursoRepository;
 
 
     @Transactional(readOnly = true)
@@ -44,21 +48,30 @@ public class AlumnoService {
     }
 
     @Transactional
-    public AlumnoResponseDTO updateAlumno(Long id, AlumnoRequestDTO alumnoRequestDTO) {
+    public AlumnoResponseDTO updateAlumno(Long id, AlumnoRequestDTO alumnoDTO) {
         Alumno alumno = alumnoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Alumno no encontrado" + id));
 
-        alumno.setApellidoPaterno(alumnoRequestDTO.getApellidoPaterno());
-        alumno.setApellidoMaterno(alumnoRequestDTO.getApellidoMaterno());
-        alumno.setNombre(alumnoRequestDTO.getNombre());
-        alumno.setDni(alumnoRequestDTO.getDni());
-        alumno.setDireccion(alumnoRequestDTO.getDireccion());
-        alumno.setEmail(alumnoRequestDTO.getEmail());
-        alumno.setCelular(alumnoRequestDTO.getCelular());
-        alumno.setEstado(alumnoRequestDTO.getEstado());
-        alumno.setFechaIngreso(LocalDateTime.now());
+        // Actualizar campos del alumno
+        alumno.setApellidoPaterno(alumnoDTO.getApellidoPaterno());
+        alumno.setApellidoMaterno(alumnoDTO.getApellidoMaterno());
+        alumno.setNombre(alumnoDTO.getNombre());
+        alumno.setDni(alumnoDTO.getDni());
+        alumno.setDireccion(alumnoDTO.getDireccion());
+        alumno.setEmail(alumnoDTO.getEmail());
+        alumno.setCelular(alumnoDTO.getCelular());
+        alumno.setEstado(alumnoDTO.getEstado());
 
-        alumnoRepository.save(alumno);
+        // Eliminar relación anterior
+        alumno.getCursos().clear(); // Limpia la lista de cursos
+
+        // Asociar nuevos cursos
+        if (alumnoDTO.getCursoIds() != null) {
+            List<Curso> cursos = cursoRepository.findAllById(alumnoDTO.getCursoIds());
+            alumno.setCursos(cursos); // Asocia los nuevos cursos
+        }
+
+        alumnoRepository.save(alumno); // Guarda el alumno con los nuevos cursos
         return alumnoMapper.convertToDTO(alumno);
     }
 

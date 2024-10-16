@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +41,7 @@ public class DocenteRequestDTO {
     @NotBlank(message = "Estado es requerido")
     private String estado;
 
-    @NotNull(message = "Debe ingresar curso que dicta docente")
-    private Integer CursoId;
+    @NotNull(message = "Debe ingresar cursos que dicta el docente")
+    private List<Long> cursoIds;
 
 }

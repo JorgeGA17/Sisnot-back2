@@ -19,7 +19,7 @@ public class DocenteResponseDTO {
     private String email;
     private String celular;
     private String estado;
-    private List<String> listaAlumnos;
+
     private List<String> listaCursos;
 
 

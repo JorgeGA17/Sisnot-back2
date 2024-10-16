@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -44,13 +45,10 @@ public class Docente {
     @Column(name = "estado", length = 30)
     private String estado;
 
-    @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
-    @JoinTable(name = "docente_alumnos",
-            joinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_docalum_docenteid")),
-            inverseJoinColumns = @JoinColumn(name = "alumno_fk", foreignKey = @ForeignKey(name = "fk_docalum_alumnoid")))
-    private List<Alumno> alumnos;
-
-    @ManyToMany(mappedBy = "docentes")
-    private List<Curso> cursos;
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinTable(name = "curso_docentes",
+            joinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_cursodoc_docenteid")),
+            inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_cursodoc_cursoid")))
+    private List<Curso> cursos = new ArrayList<>(); // Inicializa la lista
 
 }

@@ -38,6 +38,7 @@ public class AlumnoController {
         return new ResponseEntity<>(createdAlumno, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<AlumnoResponseDTO> updateAlumno(@PathVariable Long id, @Valid @RequestBody AlumnoRequestDTO alumnoDTO) {
         AlumnoResponseDTO updatedAlumno = alumnoService.updateAlumno(id, alumnoDTO);

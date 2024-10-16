@@ -23,8 +23,6 @@ public class AlumnoResponseDTO {
     private LocalDateTime fechaIngreso;
     private String estado;
 
-    private List<String> notasFinales;
-    private List<String> docenteNombres;
     private List<String> listaCursos;
 
 }

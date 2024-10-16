@@ -48,6 +48,13 @@ public class DocenteService {
     @Transactional
     public DocenteResponseDTO createDocente(DocenteRequestDTO docenteDTO) {
         Docente docente = docenteMapper.convertToEntity(docenteDTO);
+
+        // Asociar cursos
+        if (docenteDTO.getCursoIds() != null) {
+            List<Curso> cursos = cursoRepository.findAllById(docenteDTO.getCursoIds());
+            docente.setCursos(cursos); // Asocia los cursos al docente
+        }
+
         docenteRepository.save(docente);
         return docenteMapper.convertToDTO(docente);
     }
@@ -67,7 +74,19 @@ public class DocenteService {
         docente.setCelular(docenteDTO.getCelular());
         docente.setEstado(docenteDTO.getEstado());
 
-        docenteRepository.save(docente);
+        // Eliminar relación anterior
+        docente.getCursos().clear(); // Limpia la lista de cursos
+        System.out.println("Cursos después de clear: " + docente.getCursos().size()); // Depuración
+
+        docenteRepository.save(docente); // Guarda el docente sin cursos
+
+        // Asociar nuevos cursos
+        if (docenteDTO.getCursoIds() != null) {
+            List<Curso> cursos = cursoRepository.findAllById(docenteDTO.getCursoIds());
+            docente.setCursos(cursos); // Asocia los nuevos cursos
+        }
+
+        docenteRepository.save(docente); // Guarda el docente con los nuevos cursos
         return docenteMapper.convertToDTO(docente);
     }
 
@@ -76,11 +95,6 @@ public class DocenteService {
     public void deleteDocente(Long id) {
         Docente docente = docenteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado"));
-
-        for (Alumno alumno : docente.getAlumnos()) {
-            alumno.getDocentes().remove(docente);
-            alumnoRepository.save(alumno); // Guarda el alumno después de eliminar la relación
-        }
 
         docenteRepository.delete(docente);
     }

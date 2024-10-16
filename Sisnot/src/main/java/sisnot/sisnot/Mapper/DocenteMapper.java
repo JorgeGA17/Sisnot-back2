@@ -21,17 +21,7 @@ public class DocenteMapper {
     public DocenteResponseDTO convertToDTO(Docente docente) {
         DocenteResponseDTO docenteResponseDTO = modelMapper.map(docente, DocenteResponseDTO.class);
 
-        if (docente.getAlumnos() != null) {
-            List<Alumno> alumnos = docente.getAlumnos();
-            List<String> listaAlumnos = alumnos.stream()
-                    .map(alumno -> alumno.getNombre()+" "+alumno.getApellidoPaterno()+" "+alumno.getApellidoMaterno())
-                    .collect(Collectors.toList());
-            docenteResponseDTO.setListaAlumnos(listaAlumnos);
-        } else {
-            docenteResponseDTO.setListaAlumnos(Collections.emptyList());
-        }
-
-        if (docente.getCursos() != null) {
+          if (docente.getCursos() != null) {
             List<Curso> cursos = docente.getCursos();
             List<String> listaCursos = cursos.stream()
                     .map(Curso::getNomCurso)
