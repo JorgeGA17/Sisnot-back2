@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sisnot.sisnot.Model.Dto.AlumnoRequestDTO;
 import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
+import sisnot.sisnot.Model.Dto.NotaRequestDTO;
 import sisnot.sisnot.Service.AlumnoService;
 
 import java.util.List;
@@ -50,4 +51,13 @@ public class AlumnoController {
         alumnoService.deleteAlumno(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping("/{alumnoId}/cursos/{cursoId}/notas")
+    public ResponseEntity<Void> asignarNotas(@PathVariable Long alumnoId,
+                                             @PathVariable Long cursoId,
+                                             @RequestBody NotaRequestDTO notaRequestDTO) {
+        alumnoService.asignarNotas(alumnoId, cursoId, notaRequestDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }

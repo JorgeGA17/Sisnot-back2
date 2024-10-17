@@ -1,7 +1,7 @@
 package sisnot.sisnot.Model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+        import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;

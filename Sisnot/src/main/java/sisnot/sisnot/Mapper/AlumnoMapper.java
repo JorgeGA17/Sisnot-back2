@@ -24,19 +24,48 @@ public class AlumnoMapper {
 
     public AlumnoResponseDTO convertToDTO(Alumno alumno) {
         AlumnoResponseDTO alumnoResponseDTO = modelMapper.map(alumno, AlumnoResponseDTO.class);
-        // Obtener la lista de cursos
+
         List<String> listaCursos = Optional.ofNullable(alumno.getCursos())
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(Curso::getNomCurso)
+                .map(curso -> {
+                    String nomCurso = curso.getNomCurso();
+                    String docentesNombres = curso.getDocentes() != null ?
+                            curso.getDocentes().stream()
+                                    .map(docente -> docente.getNombre() + " " + docente.getApellidoPaterno() + " " + docente.getApellidoMaterno())
+                                    .collect(Collectors.joining(", "))
+                            : "Sin Docente";
+
+                    List<Nota> notas = curso.getNotas().stream()
+                            .filter(nota -> nota.getAlumnofk().getId().equals(alumno.getId()))
+                            .collect(Collectors.toList());
+
+                    String notasString = notas.isEmpty() ? "Sin Notas" : formatNotas(notas.get(0));
+
+                    // No incluir saltos de línea en el string
+                    return String.format("%s: [Docentes: [%s], Notas: [%s]]",
+                            nomCurso,
+                            docentesNombres,
+                            notasString);
+                })
                 .collect(Collectors.toList());
+
         alumnoResponseDTO.setListaCursos(listaCursos);
 
         return alumnoResponseDTO;
     }
-    public NotaResponseDTO convertNotaToDTO(Nota nota) {
-        return modelMapper.map(nota, NotaResponseDTO.class);
+
+    // Método auxiliar para formatear las notas
+    private String formatNotas(Nota nota) {
+        return String.format("c1: %.2f, c2: %.2f, NP: %.2f, c3: %.2f, c4: %.2f, NF: %.2f",
+                nota.getComponente1Nota(),
+                nota.getComponente2Nota(),
+                nota.getNotaParcial(),
+                nota.getComponente3Nota(),
+                nota.getComponente4Nota(),
+                nota.getNotaFinal());
     }
+
 
     public Alumno convertToEntity(AlumnoRequestDTO alumnoRequestDTO) {
         return modelMapper.map(alumnoRequestDTO, Alumno.class);
