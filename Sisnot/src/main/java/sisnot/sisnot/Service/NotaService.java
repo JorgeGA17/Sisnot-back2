@@ -21,6 +21,7 @@ public class NotaService {
     private NotaRepository notaRepository;
     private NotaMapper notaMapper;
 
+
     @Transactional(readOnly = true)
     public List<NotaResponseDTO> getAllNotas() {
         List<Nota> notas = notaRepository.findAll();

@@ -52,12 +52,5 @@ public class AlumnoController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/{alumnoId}/cursos/{cursoId}/notas")
-    public ResponseEntity<Void> asignarNotas(@PathVariable Long alumnoId,
-                                             @PathVariable Long cursoId,
-                                             @RequestBody NotaRequestDTO notaRequestDTO) {
-        alumnoService.asignarNotas(alumnoId, cursoId, notaRequestDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 
 }

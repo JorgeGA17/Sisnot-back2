@@ -37,4 +37,13 @@ public class NotaRequestDTO {
     @Positive
     private Double notaFinal;
 
+
+    // Nuevo campo para el ID del alumno
+    @NotNull(message = "ID del alumno es requerido")
+    private Long alumnoId;
+
+    // Nuevo campo para el ID del curso
+    @NotNull(message = "ID del curso es requerido")
+    private Long cursoId;
+
 }
