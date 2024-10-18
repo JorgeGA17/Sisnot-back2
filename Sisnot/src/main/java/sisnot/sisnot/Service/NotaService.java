@@ -44,20 +44,25 @@ public class NotaService {
 
     @Transactional
     public NotaResponseDTO createNota(NotaRequestDTO notaRequestDTO) {
-        Nota nota = notaMapper.convertToEntity(notaRequestDTO);
-        nota.setFechaRegistro(LocalDateTime.now());
-
         // Buscar el alumno y el curso por sus IDs
         Alumno alumno = alumnoRepository.findById(notaRequestDTO.getAlumnoId())
                 .orElseThrow(() -> new RuntimeException("Alumno no encontrado con ID: " + notaRequestDTO.getAlumnoId()));
         Curso curso = cursoRepository.findById(notaRequestDTO.getCursoId())
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado con ID: " + notaRequestDTO.getCursoId()));
 
-        // Asociar el alumno y el curso a la nota
+        // Convertir DTO a entidad Nota
+        Nota nota = notaMapper.convertToEntity(notaRequestDTO);
+
+        // Establecer el alumno y el curso en la nota
         nota.setAlumnofk(alumno);
         nota.setCursofk(curso);
 
+        // Establecer la fecha de registro
+        nota.setFechaRegistro(LocalDateTime.now());
+
+        // Guardar la nota en la base de datos
         notaRepository.save(nota);
+
         return notaMapper.convertToDTO(nota);
     }
 

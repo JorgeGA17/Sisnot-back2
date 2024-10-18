@@ -18,4 +18,8 @@ public class NotaResponseDTO {
     private Double componente4Nota;
     private Double notaFinal;
     private LocalDateTime fechaRegistro;
+
+    private Long alumnoId; // ID del alumno
+    private Long cursoId;   // ID del curso
+
 }
