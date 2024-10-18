@@ -76,8 +76,6 @@ public class DocenteService {
 
         // Eliminar relación anterior
         docente.getCursos().clear(); // Limpia la lista de cursos
-        System.out.println("Cursos después de clear: " + docente.getCursos().size()); // Depuración
-
         docenteRepository.save(docente); // Guarda el docente sin cursos
 
         // Asociar nuevos cursos

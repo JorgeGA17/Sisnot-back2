@@ -46,7 +46,14 @@ public class AlumnoService {
     public AlumnoResponseDTO createAlumno(AlumnoRequestDTO alumnoRequestDTO) {
         Alumno alumno = alumnoMapper.convertToEntity(alumnoRequestDTO);
         alumno.setFechaIngreso(LocalDateTime.now());
-        alumnoRepository.save(alumno);
+
+        // Asociar cursos si se proporcionan IDs
+        if (alumnoRequestDTO.getCursoIds() != null) {
+            List<Curso> cursos = cursoRepository.findAllById(alumnoRequestDTO.getCursoIds());
+            alumno.setCursos(cursos); // Asocia los cursos al nuevo alumno
+        }
+
+        alumnoRepository.save(alumno); // Guarda el nuevo alumno con los cursos asociados
         return alumnoMapper.convertToDTO(alumno);
     }
 
