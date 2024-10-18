@@ -30,8 +30,11 @@ public class Nota {
     @Column(name = "componente4_nota")
     private Double componente4Nota;
 
-   @Column(name = "nota_final")
-   private Double notaFinal;
+    @Column(name = "nota_final")
+    private Double notaFinal;
+
+    @Column(name="Promedio_final")
+    private Double promedioFinal;
 
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;

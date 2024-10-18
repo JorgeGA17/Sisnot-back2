@@ -1,5 +1,6 @@
 package sisnot.sisnot.Service;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sisnot.sisnot.Mapper.NotaMapper;
 import sisnot.sisnot.Model.Dto.NotaRequestDTO;
 import sisnot.sisnot.Model.Dto.NotaResponseDTO;
+import sisnot.sisnot.Model.Dto.NotaUpdateDTO;
 import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Model.entity.Curso;
 import sisnot.sisnot.Model.entity.Nota;
@@ -53,6 +55,18 @@ public class NotaService {
         // Convertir DTO a entidad Nota
         Nota nota = notaMapper.convertToEntity(notaRequestDTO);
 
+        // Calcular la nota parcial
+        Double notaParcial = 0.25 * nota.getComponente1Nota() + 0.2 * nota.getComponente2Nota();
+        nota.setNotaParcial(notaParcial);
+
+        // Calcular la nota final
+        Double notaFinal = 0.25 * nota.getComponente3Nota() + 0.3 * nota.getComponente4Nota();
+        nota.setNotaFinal(notaFinal);
+
+        // Calcular la nueva Promedio final
+        Double promedioFinal = nota.getNotaParcial() + nota.getNotaFinal();
+        nota.setPromedioFinal(promedioFinal);
+
         // Establecer el alumno y el curso en la nota
         nota.setAlumnofk(alumno);
         nota.setCursofk(curso);
@@ -68,16 +82,29 @@ public class NotaService {
 
     @Transactional
     public NotaResponseDTO updateNota(Long id, NotaRequestDTO notaRequestDTO) {
+        // Recuperar la nota existente
         Nota nota = notaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nota no encontrada con ID: " + id));
 
-        // Actualizar campos de la nota
+        // Actualizar campos de la nota con los nuevos valores
         nota.setComponente1Nota(notaRequestDTO.getComponente1Nota());
         nota.setComponente2Nota(notaRequestDTO.getComponente2Nota());
-        nota.setNotaParcial(notaRequestDTO.getNotaParcial());
         nota.setComponente3Nota(notaRequestDTO.getComponente3Nota());
         nota.setComponente4Nota(notaRequestDTO.getComponente4Nota());
-        nota.setNotaFinal(notaRequestDTO.getNotaFinal());
+
+        // Calcular la nueva nota parcial
+        Double notaParcial = 0.25 * nota.getComponente1Nota() + 0.2 * nota.getComponente2Nota();
+        nota.setNotaParcial(notaParcial);
+
+        // Calcular la nueva nota final
+        Double notaFinal = 0.25 * nota.getComponente3Nota() + 0.3 * nota.getComponente4Nota();
+        nota.setNotaFinal(notaFinal);
+
+        // Calcular la nueva Promedio final
+        Double promedioFinal = nota.getNotaParcial() + nota.getNotaFinal();
+        nota.setPromedioFinal(promedioFinal);
+
+        // Establecer la fecha de registro
         nota.setFechaRegistro(LocalDateTime.now());
 
         // Buscar el alumno y el curso por sus IDs (si se desea actualizar)
@@ -90,8 +117,23 @@ public class NotaService {
         nota.setAlumnofk(alumno);
         nota.setCursofk(curso);
 
+        // Guardar la nota actualizada en la base de datos
         notaRepository.save(nota);
+
         return notaMapper.convertToDTO(nota);
+    }
+
+
+    @Transactional
+    public void updateNotasByAlumnoId(Long alumnoId, Long cursoId, @Valid NotaUpdateDTO notaUpdateDTO) {
+        notaRepository.updateNotasByAlumnoId(
+                notaUpdateDTO.getComponente1Nota(),
+                notaUpdateDTO.getComponente2Nota(),
+                notaUpdateDTO.getComponente3Nota(),
+                notaUpdateDTO.getComponente4Nota(),
+                alumnoId,
+                cursoId
+        );
     }
 
     @Transactional

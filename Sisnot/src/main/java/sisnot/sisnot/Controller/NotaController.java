@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sisnot.sisnot.Model.Dto.NotaRequestDTO;
 import sisnot.sisnot.Model.Dto.NotaResponseDTO;
+import sisnot.sisnot.Model.Dto.NotaUpdateDTO;
 import sisnot.sisnot.Service.NotaService;
 
 import java.util.List;
@@ -42,6 +43,15 @@ public class NotaController {
     public ResponseEntity<NotaResponseDTO> updateNota(@PathVariable Long id, @Valid @RequestBody NotaRequestDTO notaDTO) {
         NotaResponseDTO updatedNota = notaService.updateNota(id, notaDTO);
         return new ResponseEntity<>(updatedNota, HttpStatus.OK);
+    }
+
+    @PutMapping("/alumno/{alumnoId}/curso/{cursoId}")
+    public ResponseEntity<Void> updateNotasByAlumnoId(
+            @PathVariable Long alumnoId,
+            @PathVariable Long cursoId,
+            @Valid @RequestBody NotaUpdateDTO notaDTO) {
+        notaService.updateNotasByAlumnoId(alumnoId, cursoId, notaDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

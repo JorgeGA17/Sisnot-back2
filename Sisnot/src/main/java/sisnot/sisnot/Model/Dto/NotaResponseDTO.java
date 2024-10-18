@@ -17,6 +17,7 @@ public class NotaResponseDTO {
     private Double componente3Nota;
     private Double componente4Nota;
     private Double notaFinal;
+    private Double promedioFinal;
     private LocalDateTime fechaRegistro;
 
     private Long alumnoId; // ID del alumno

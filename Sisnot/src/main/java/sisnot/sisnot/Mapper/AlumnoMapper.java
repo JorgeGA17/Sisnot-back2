@@ -57,13 +57,14 @@ public class AlumnoMapper {
 
     // Método auxiliar para formatear las notas
     private String formatNotas(Nota nota) {
-        return String.format("c1: %.2f, c2: %.2f, NP: %.2f, c3: %.2f, c4: %.2f, NF: %.2f",
+        return String.format("c1: %.2f, c2: %.2f, Np: %.2f, c3: %.2f, c4: %.2f, Nf: %.2f, PromFinal: %.2f",
                 nota.getComponente1Nota(),
                 nota.getComponente2Nota(),
                 nota.getNotaParcial(),
                 nota.getComponente3Nota(),
                 nota.getComponente4Nota(),
-                nota.getNotaFinal());
+                nota.getNotaFinal(),
+                nota.getPromedioFinal());
     }
 
 
