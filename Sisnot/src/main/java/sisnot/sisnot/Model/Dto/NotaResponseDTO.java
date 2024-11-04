@@ -20,7 +20,7 @@ public class NotaResponseDTO {
     private Double promedioFinal;
     private LocalDateTime fechaRegistro;
 
-    private Long alumnoId; // ID del alumno
-    private Long cursoId;   // ID del curso
+    private Long alumnoId;
+    private Long cursoId;
 
 }

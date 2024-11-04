@@ -82,42 +82,33 @@ public class NotaService {
 
     @Transactional
     public NotaResponseDTO updateNota(Long id, NotaRequestDTO notaRequestDTO) {
-        // Recuperar la nota existente
         Nota nota = notaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nota no encontrada con ID: " + id));
 
-        // Actualizar campos de la nota con los nuevos valores
         nota.setComponente1Nota(notaRequestDTO.getComponente1Nota());
         nota.setComponente2Nota(notaRequestDTO.getComponente2Nota());
         nota.setComponente3Nota(notaRequestDTO.getComponente3Nota());
         nota.setComponente4Nota(notaRequestDTO.getComponente4Nota());
 
-        // Calcular la nueva nota parcial
         Double notaParcial = 0.25 * nota.getComponente1Nota() + 0.2 * nota.getComponente2Nota();
         nota.setNotaParcial(notaParcial);
 
-        // Calcular la nueva nota final
         Double notaFinal = 0.25 * nota.getComponente3Nota() + 0.3 * nota.getComponente4Nota();
         nota.setNotaFinal(notaFinal);
 
-        // Calcular la nueva Promedio final
         Double promedioFinal = nota.getNotaParcial() + nota.getNotaFinal();
         nota.setPromedioFinal(promedioFinal);
 
-        // Establecer la fecha de registro
         nota.setFechaRegistro(LocalDateTime.now());
 
-        // Buscar el alumno y el curso por sus IDs (si se desea actualizar)
         Alumno alumno = alumnoRepository.findById(notaRequestDTO.getAlumnoId())
                 .orElseThrow(() -> new RuntimeException("Alumno no encontrado con ID: " + notaRequestDTO.getAlumnoId()));
         Curso curso = cursoRepository.findById(notaRequestDTO.getCursoId())
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado con ID: " + notaRequestDTO.getCursoId()));
 
-        // Asociar el alumno y el curso a la nota
         nota.setAlumnofk(alumno);
         nota.setCursofk(curso);
 
-        // Guardar la nota actualizada en la base de datos
         notaRepository.save(nota);
 
         return notaMapper.convertToDTO(nota);

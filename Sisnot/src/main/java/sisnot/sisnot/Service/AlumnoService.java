@@ -1,5 +1,6 @@
 package sisnot.sisnot.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import sisnot.sisnot.Model.entity.Curso;
 import sisnot.sisnot.Model.entity.Nota;
 import sisnot.sisnot.Repository.AlumnoRepository;
 import sisnot.sisnot.Repository.CursoRepository;
+import sisnot.sisnot.Repository.NotaRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +29,9 @@ public class AlumnoService {
     private AlumnoRepository alumnoRepository;
     @Autowired
     private CursoRepository cursoRepository;
+    @Autowired
+    private NotaRepository notaRepository;
+
 
 
     @Transactional(readOnly = true)
@@ -87,7 +92,14 @@ public class AlumnoService {
 
     @Transactional
     public void deleteAlumno(Long id) {
-        alumnoRepository.deleteById(id);
+        Alumno alumno = alumnoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
+
+        // Eliminar las notas asociadas
+        notaRepository.deleteAll(alumno.getNotas());
+
+        // Luego, eliminar el alumno
+        alumnoRepository.delete(alumno);
     }
 
 

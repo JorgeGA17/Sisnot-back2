@@ -28,6 +28,6 @@ public interface NotaRepository extends JpaRepository<Nota,Long> {
             Double componente3Nota,
             Double componente4Nota,
             Long alumnoId,
-            Long cursoId  // Nuevo parámetro para el ID del curso
+            Long cursoId
     );
 }
