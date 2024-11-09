@@ -42,7 +42,7 @@ public class AlumnoMapper {
 
                     String notasString = notas.isEmpty() ? "Sin Notas" : formatNotas(notas.get(0));
 
-                    // No incluir saltos de línea en el string
+
                     return String.format("%s: [Docentes: [%s], Notas: [%s]]",
                             nomCurso,
                             docentesNombres,
@@ -57,7 +57,7 @@ public class AlumnoMapper {
 
     // Método auxiliar para formatear las notas
     private String formatNotas(Nota nota) {
-        return String.format("c1: %.2f, c2: %.2f, c3: %.2f, c4: %.2f, PromFinal: %.2f",
+        return String.format("c1: %.2f; c2: %.2f; c3: %.2f; c4: %.2f; PromFinal: %.2f",
                 nota.getComponente1Nota(),
                 nota.getComponente2Nota(),
                 nota.getComponente3Nota(),
