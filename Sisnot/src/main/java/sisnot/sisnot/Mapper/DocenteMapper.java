@@ -41,13 +41,13 @@ public class DocenteMapper {
                                         String notasString = notas.isEmpty() ? "Sin Notas" : formatNotas(notas.get(0));
 
                                         // Retornar el nombre del alumno y sus notas
-                                        return String.format("%s %s %s: [%s]",
+                                        return String.format("%s %s %s: (%s)",
                                                 alumno.getNombre(),
                                                 alumno.getApellidoPaterno(),
                                                 alumno.getApellidoMaterno(),
                                                 notasString);
                                     })
-                                    .collect(Collectors.joining(", "))
+                                    .collect(Collectors.joining(" / "))
                             : "Sin Alumnos";
 
                     // No incluir saltos de línea en el string
