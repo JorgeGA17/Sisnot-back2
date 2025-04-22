@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,10 @@ public class Docente {
     @Column(name = "celular", unique = true)
     private String celular;
 
+    @Column(name = "fecha_ingreso")
+    private LocalDateTime fechaIngreso;
+
+
     @Size(max = 30)
     @Column(name = "estado", length = 30)
     private String estado;
@@ -50,5 +55,11 @@ public class Docente {
             joinColumns = @JoinColumn(name = "docente_fk", foreignKey = @ForeignKey(name = "fk_cursodoc_docenteid")),
             inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_cursodoc_cursoid")))
     private List<Curso> cursos = new ArrayList<>(); // Inicializa la lista
+
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
 
 }
