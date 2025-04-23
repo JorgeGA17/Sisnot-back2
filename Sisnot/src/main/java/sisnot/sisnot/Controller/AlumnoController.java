@@ -52,5 +52,4 @@ public class AlumnoController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
 }

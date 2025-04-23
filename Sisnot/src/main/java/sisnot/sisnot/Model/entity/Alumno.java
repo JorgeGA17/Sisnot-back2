@@ -54,9 +54,9 @@ public class Alumno {
     private List<Nota> notas= new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinTable(name = "alumno_cursos",
-            joinColumns = @JoinColumn(name = "alumno_fk", foreignKey = @ForeignKey(name = "fk_alumcur_alumnoid")),
-            inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_alumcur_cursoid")))
+    @JoinTable(name = "inscripción",
+            joinColumns = @JoinColumn(name = "alumno_fk", foreignKey = @ForeignKey(name = "fk_inscripcion_alumnoid")),
+            inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_inscripcion_cursoid")))
     private List<Curso> cursos;
 
 

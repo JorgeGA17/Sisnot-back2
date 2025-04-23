@@ -22,7 +22,7 @@ public class AlumnoResponseDTO {
     private String celular;
     private LocalDateTime fechaIngreso;
     private String estado;
-
+    private List<Long> cursoIds;
     private List<String> listaCursos;
 
 }

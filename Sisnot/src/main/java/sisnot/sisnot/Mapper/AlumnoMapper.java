@@ -25,6 +25,14 @@ public class AlumnoMapper {
     public AlumnoResponseDTO convertToDTO(Alumno alumno) {
         AlumnoResponseDTO alumnoResponseDTO = modelMapper.map(alumno, AlumnoResponseDTO.class);
 
+        // Asignar cursoIds al DTO
+        List<Long> cursoIds = Optional.ofNullable(alumno.getCursos())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(Curso::getId) // Asegúrate de que Curso tiene un método getId()
+                .collect(Collectors.toList());
+        alumnoResponseDTO.setCursoIds(cursoIds);
+
         List<String> listaCursos = Optional.ofNullable(alumno.getCursos())
                 .orElse(Collections.emptyList())
                 .stream()
@@ -41,7 +49,6 @@ public class AlumnoMapper {
                             .collect(Collectors.toList());
 
                     String notasString = notas.isEmpty() ? "Sin Notas" : formatNotas(notas.get(0));
-
 
                     return String.format("%s: [Docentes: [%s], Notas: [%s]]",
                             nomCurso,
