@@ -8,11 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import sisnot.sisnot.Mapper.AlumnoMapper;
 import sisnot.sisnot.Model.Dto.AlumnoRequestDTO;
 import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
-import sisnot.sisnot.Model.Dto.NotaRequestDTO;
-import sisnot.sisnot.Model.Dto.NotaResponseDTO;
 import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Model.entity.Curso;
-import sisnot.sisnot.Model.entity.Nota;
 import sisnot.sisnot.Repository.AlumnoRepository;
 import sisnot.sisnot.Repository.CursoRepository;
 import sisnot.sisnot.Repository.NotaRepository;
@@ -73,7 +70,6 @@ public class AlumnoService {
         alumno.setNombre(alumnoDTO.getNombre());
         alumno.setDni(alumnoDTO.getDni());
         alumno.setDireccion(alumnoDTO.getDireccion());
-        alumno.setEmail(alumnoDTO.getEmail());
         alumno.setCelular(alumnoDTO.getCelular());
         alumno.setEstado(alumnoDTO.getEstado());
 

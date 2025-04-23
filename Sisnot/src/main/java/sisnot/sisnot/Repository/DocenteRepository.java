@@ -7,6 +7,4 @@ import sisnot.sisnot.Model.entity.Docente;
 @Repository
 public interface DocenteRepository extends JpaRepository<Docente, Long> {
 
-    boolean existsBynombreAndAndApellidoPaterno (String nombre, String apellidoPaterno);
-    boolean existsBynombreAndAndApellidoPaternoAndUserIdNot (String nombre, String apellidoPaterno, Integer userId);
 }

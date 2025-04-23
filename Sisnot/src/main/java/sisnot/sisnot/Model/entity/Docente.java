@@ -57,9 +57,6 @@ public class Docente {
     private List<Curso> cursos = new ArrayList<>(); // Inicializa la lista
 
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
 
 
 }

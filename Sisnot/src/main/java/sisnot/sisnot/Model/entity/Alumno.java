@@ -36,6 +36,9 @@ public class Alumno {
     @Column(name = "direccion", length = 100)
     private String direccion;
 
+    @Size(max = 100)
+    @Column(name = "email", length = 100, unique = true)
+    private String email;
 
     @Column(name = "celular", unique = true)
     private String celular;
@@ -56,9 +59,6 @@ public class Alumno {
             inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_alumcur_cursoid")))
     private List<Curso> cursos;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
 
 
 }
