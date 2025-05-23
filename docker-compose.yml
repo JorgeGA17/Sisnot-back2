@@ -1,0 +1,52 @@
+# Puedes eliminar esta línea si quieres, ya no es necesaria.
+# version: '3.8' 
+
+services:
+  # Servicio para la base de datos PostgreSQL
+  db:
+    image: postgres:16
+    container_name: sisnot-postgres-db
+    environment:
+      POSTGRES_DB: Sisnot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432" # Mapea el puerto 5432 del contenedor al 5432 de tu máquina local
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data # Persistencia de datos
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d Sisnot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Servicio para tu aplicación Spring Boot (Sisnot-back2)
+  app:
+    build: ./Sisnot # Ruta donde está tu Dockerfile de Spring Boot
+    container_name: sisnot-app
+    ports:
+      - "8081:8081" # Exponemos el puerto al host para pruebas directas si es necesario
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/Sisnot # 'db' es el nombre del servicio de la BD
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123456
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # NUEVO: Servicio para tu API Gateway
+  api-gateway:
+    build: ./API-GATEWAY # <--- Asume que tu Dockerfile de API Gateway está en una carpeta ./ApiGateway
+    container_name: sisnot-api-gateway
+    ports:
+      - "8080:8080" # El puerto que el Gateway expone al host
+    environment:
+      # AQUÍ ESTÁ EL CAMBIO CLAVE: Usa 'app' como nombre de host para el servicio Sisnot
+      SISNOT_SERVICE_URI: http://app:8081
+      # Puedes pasar otras variables de entorno si las necesitas
+    depends_on:
+      app:
+        condition: service_started # El Gateway necesita que 'app' esté iniciado
+    restart: unless-stopped
