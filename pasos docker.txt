@@ -1,0 +1,25 @@
+# Etiquetar y subir sisnot-frontend
+docker tag sisnot-frontend:latest jorgega01/sisnotfull:frontend
+docker push jorgega01/sisnotfull:frontend
+
+# Etiquetar y subir sisnot-api-gateway
+docker tag sisnot-api-gateway:latest jorgega01/sisnotfull:api-gateway
+docker push jorgega01/sisnotfull:api-gateway
+
+# Etiquetar y subir sisnot-backend
+docker tag sisnot-backend:latest jorgega01/sisnotfull:backend
+docker push jorgega01/sisnotfull:backend
+
+# Etiquetar y subir postgres:16
+docker tag postgres:16 jorgega01/sisnotfull:postgres16
+docker push jorgega01/sisnotfull:postgres16
+
+
+
+para stop de container
+docker ps -a
+docker stop sisnot
+
+para bajar la imagen de Docker hub se debe crear el archivo compose.yml para ejecutarlos en un container
+docker compose -f docker-composeHUB.yml up   (en caso tenga otro nombre se ejecuta asi) pero si es el habitual se llama
+Docker compose up
