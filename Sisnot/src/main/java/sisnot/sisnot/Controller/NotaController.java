@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Notas")
 @AllArgsConstructor
-@CrossOrigin(originPatterns = "http://localhost:4200/")
+//@CrossOrigin(originPatterns = "http://localhost:4200/")
 public class NotaController {
 
     private final NotaService notaService;

@@ -59,6 +59,4 @@ public class Alumno {
             inverseJoinColumns = @JoinColumn(name = "curso_fk", foreignKey = @ForeignKey(name = "fk_inscripcion_cursoid")))
     private List<Curso> cursos;
 
-
-
 }
