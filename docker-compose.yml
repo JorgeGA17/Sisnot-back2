@@ -1,7 +1,7 @@
 version: '3.8'
 
-services: 
- # PostgreSQL
+services:
+  # PostgreSQL
   postgres:
     image: postgres:16
     container_name: sisnot-postgres-db
@@ -12,23 +12,23 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./Sisnot-back2/postgres-data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
 
- # BACKEND
+  # BACKEND
   backend:
-    build: ./Sisnot-back2/Sisnot 
+    build: ./Sisnot-back2/Sisnot
     container_name: sisnot-backend
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/Sisnot 
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/Sisnot
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123456
     depends_on:
-    - postgres
+      - postgres
 
- # API _ GATEWAY 
-  api-gateway: 
+  # API _ GATEWAY 
+  api-gateway:
     build: ./Sisnot-back2/API-GATEWAY
     container_name: sisnot-api-gateway
     ports:
@@ -36,15 +36,18 @@ services:
     environment:
       SISNOT_SERVICE_URI: http://backend:8081
     depends_on:
-     - backend
-    
-# FRONTEND
-  frontend: 
-    build: ./SisnotFront 
+      - backend
+
+  # FRONTEND
+  frontend:
+    build: ./SisnotFront
     container_name: sisnot-frontend
     ports:
-     - "4200:4200"
+      - "4200:4200"
     environment:
-      REACT_APP_API_URL: http://api-gateway:8080 
+      REACT_APP_API_URL: http://api-gateway:8080
     depends_on:
-    - api-gateway
+      - api-gateway
+
+volumes:
+  pgdata:
