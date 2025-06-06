@@ -2,14 +2,11 @@ package sisnot.sisnot.Mapper;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Component;
 import sisnot.sisnot.Model.Dto.AlumnoRequestDTO;
 import sisnot.sisnot.Model.Dto.AlumnoResponseDTO;
-import sisnot.sisnot.Model.Dto.NotaResponseDTO;
 import sisnot.sisnot.Model.entity.Alumno;
 import sisnot.sisnot.Model.entity.Curso;
-import sisnot.sisnot.Model.entity.Docente;
 import sisnot.sisnot.Model.entity.Nota;
 
 import java.util.Collections;
@@ -29,8 +26,8 @@ public class AlumnoMapper {
         List<Long> cursoIds = Optional.ofNullable(alumno.getCursos())
                 .orElse(Collections.emptyList())
                 .stream()
-                .map(Curso::getId) // Asegúrate de que Curso tiene un método getId()
-                .collect(Collectors.toList());
+                .map(Curso::getId)
+                .collect(Collectors.toList());// Asegúrate de que Curso tiene un método getId()
         alumnoResponseDTO.setCursoIds(cursoIds);
 
         List<String> listaCursos = Optional.ofNullable(alumno.getCursos())
